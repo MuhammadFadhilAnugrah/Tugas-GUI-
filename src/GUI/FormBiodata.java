@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FormBiodata {
     private JTextField textNama;
@@ -12,20 +15,29 @@ public class FormBiodata {
     private JPanel rootpanel;
     private JLabel labelHasil;
 
+    public void insertingDatatofile(String inputtedData){
+        try {
+            FileWriter fr=new FileWriter("data.txt",true);
+            fr.write(inputtedData);
+            fr.close();
+        }catch (IOException ioe){
+            System.out.println("IOExceptio: " + ioe.getMessage());
+        }
+    }
+
     public FormBiodata() {
         buttonSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               //mengambil data dari textnama
-               String nama = textNama.getText();
-               //mengambil data dari text
-                String kupon = textNokupon.getText();
-                //proses
-                Peserta peserta = new Peserta();
-                peserta .setNama(nama);
-                peserta.setKupon(kupon);
-                //tapil output ke layar
-                labelHasil.setText(peserta.toString());
+            //mengambil data dari textnama
+            String nama = textNama.getText();
+            //mengambil data dari text
+            String kupon = textNokupon.getText();
+            String result1 = "Nama : " + nama;
+            String result2 = "no kupon" + kupon;
+
+            String resultgabungan = result1 +"\n" + result2+"\n\n";
+            insertingDatatofile(resultgabungan);
             }
         });
     }
